@@ -14,9 +14,9 @@
 #define COMMENT_PATTERN_1 @"(/\\*([^/]|[^\\*]/)*\\*/)"  // pattern : /\*([^/]|[^\*]/)*\*/
 #define COMMENT_PATTERN_2 @"(//[^\\n]*\\n)"   // pattern : ^([^/\n]|[^/\n]/)*(//[^\n]*\n)
 
-#define IMPORT_PATTERN    @"#import\\s*\"([^\"]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h\""
-#define INCLUDE_PATTERN   @"#include\\s*\"([^\"]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h\""
-#define INCLUDE_PATTERN_2 @"#include\\s*<([^>]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h>"
+#define IMPORT_PATTERN    @"#\\s*import\\s*\"([^\"]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h\""
+#define INCLUDE_PATTERN   @"#\\s*include\\s*\"([^\"]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h\""
+#define INCLUDE_PATTERN_2 @"#\\s*include\\s*<([^>]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h>"
 #define XIB_PATTERN       @" customClass=\"([a-zA-Z0-9_-]+)\""
 
 @interface JXUnusedFilesFinder ()
