@@ -13,6 +13,7 @@
 
 #define COMMENT_PATTERN_1 @"(/\\*([^/]|[^\\*]/)*\\*/)"  // pattern : /\*([^/]|[^\*]/)*\*/
 #define COMMENT_PATTERN_2 @"(//[^\\n]*\\n)"   // pattern : ^([^/\n]|[^/\n]/)*(//[^\n]*\n)
+#define COMMENT_PATTERN_3 @"(//[^\\n]*$)"
 
 #define IMPORT_PATTERN    @"#\\s*import\\s*\"([^\"]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h\""
 #define INCLUDE_PATTERN   @"#\\s*include\\s*\"([^\"]+/)?([a-zA-Z0-9\\+\\._-]+)\\.h\""
@@ -87,7 +88,19 @@
                     [fileInfo.parentFileKeyList addObject:@"__jx_system_hold"];
                 }
                 
-                [self.fileKeyDic setObject:fileInfo forKey:fileKey];
+                NSString *headerFileContent = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+                if (headerFileContent)
+                {
+                    headerFileContent = [headerFileContent stringByReplacingMatchedComponentWithPattern:COMMENT_PATTERN_1 groupIndex:1 withString:@""];
+                    headerFileContent = [headerFileContent stringByReplacingMatchedComponentWithPattern:COMMENT_PATTERN_2 groupIndex:1 withString:@"\n"];
+                    headerFileContent = [headerFileContent stringByReplacingMatchedComponentWithPattern:COMMENT_PATTERN_3 groupIndex:1 withString:@""];
+                    headerFileContent = [headerFileContent trimString];
+                }
+                
+                if (headerFileContent && headerFileContent.length > 0)
+                {
+                    [self.fileKeyDic setObject:fileInfo forKey:fileKey];
+                }
             }
         }
         

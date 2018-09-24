@@ -16,4 +16,6 @@
 
 -(NSString *)stringByDeletingPathExtension;
 
+-(NSString *)trimString;
+
 @end

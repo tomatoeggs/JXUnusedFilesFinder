@@ -34,8 +34,21 @@
 {
     NSArray *needDeleteStringList = [self getMatchedStringsWithPattern:pattern groupIndex:index];
     
+    NSMutableArray *strList = [needDeleteStringList mutableCopy];
+    [strList sortUsingComparator:^NSComparisonResult(NSString *  _Nonnull obj1, NSString *  _Nonnull obj2) {
+        
+        if (obj1.length > obj2.length)
+        {
+            return NSOrderedAscending;
+        }
+        else
+        {
+            return NSOrderedDescending;
+        }
+    }];
+    
     NSString *newString = [self copy];
-    for (NSString *needDeleteString in needDeleteStringList)
+    for (NSString *needDeleteString in strList)
     {
         newString = [newString stringByReplacingOccurrencesOfString:needDeleteString withString:string];
     }
@@ -46,6 +59,11 @@
 -(NSString *)stringByDeletingPathExtension
 {
     return [self stringByReplacingOccurrencesOfString:[@"." stringByAppendingString:[self pathExtension]] withString:@""];
+}
+
+-(NSString *)trimString
+{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 @end
